@@ -4,7 +4,7 @@ info:
   title: Parley
 tags:
   - name: Unauthenticated
-  - name: Athenticated
+  - name: Authenticated
 paths:
   /:
     get:
@@ -21,8 +21,8 @@ paths:
                 properties:
                   running:
                     type: string
-                    enum: [Parsley]
-                    example: Parsley
+                    enum: [Parley]
+                    example: Parley
                   version:
                     type: string
                     example: 0.1.0
@@ -63,21 +63,83 @@ paths:
               required:
                 - username
                 - passkey
-                - public
+                - publickey
               properties:
                 username:
                   type: string
                 passkey:
                   type: string
-                public:
+                publickey:
                   type: string
+  /solve:
+    post:
+      tags:
+        - Unauthenticated
+      summary: Solve challenge
+      responses:
+        '200':
+          description: Valid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/valid"
+        '401':
+          description: Invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalid"
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - solve
+              properties:
+                solve:
+                  type: string
+  /channels:
+    get:
+      tags:
+        - Authenticated
+      summary: Get user channels
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    schema:
+                      $ref: "#/components/schemas/channel"
 components:
   schemas:
+    valid:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
     invalid:
       type: object
-      required:
-        - success
       properties:
         success:
           type: boolean
           example: false
+    channel:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "1234"
+        name:
+          type: string
+          example: "Friend"
+        picture:
+          type: string
+          example: "https://.../image.png"
