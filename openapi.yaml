@@ -1,0 +1,83 @@
+openapi: 3.0.0
+info:
+  version: "0.1.0"
+  title: Parley
+tags:
+  - name: Unauthenticated
+  - name: Athenticated
+paths:
+  /:
+    get:
+      tags:
+        - Unauthenticated
+      summary: Gets basic info
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  running:
+                    type: string
+                    enum: [Parsley]
+                    example: Parsley
+                  version:
+                    type: string
+                    example: 0.1.0
+  /login:
+    post:
+      tags:
+        - Unauthenticated
+      summary: Login
+      responses:
+        '200':
+          description: All valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  challenge:
+                    type: string
+                    example: Encrypted value
+        '400':
+          description: Public doesn't match
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalid"
+        '401':
+          description: Invalid username or passkey
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalid"
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - username
+                - passkey
+                - public
+              properties:
+                username:
+                  type: string
+                passkey:
+                  type: string
+                public:
+                  type: string
+components:
+  schemas:
+    invalid:
+      type: object
+      required:
+        - success
+      properties:
+        success:
+          type: boolean
+          example: false
