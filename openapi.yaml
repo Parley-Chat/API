@@ -67,11 +67,11 @@ paths:
                   type: string
                 publickey:
                   type: string
-  /singup:
+  /signup:
     post:
       tags:
         - Unauthenticated
-      summary: Sing up
+      summary: Sign up
       responses:
         '200':
           description: All valid
@@ -110,6 +110,17 @@ paths:
       tags:
         - Unauthenticated
       summary: Solve challenge
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - solve
+              properties:
+                solve:
+                  type: string
       responses:
         '200':
           description: Valid
@@ -123,17 +134,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/invalid"
-      requestBody:
-        required: true
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
-              required:
-                - solve
-              properties:
-                solve:
-                  type: string
   /channels:
     get:
       tags:
@@ -149,8 +149,44 @@ paths:
                 items:
                   type: object
                   properties:
-                    schema:
-                      $ref: "#/components/schemas/channel"
+                    id:
+                      type: string
+                      example: "1234"
+                    name:
+                      type: string
+                      example: "Friend"
+                    picture:
+                      type: string
+                      example: "https://.../image.png"
+  /messages:
+    get:
+      tags:
+        - Authenticated
+      summary: Get the messages of a channel
+      parameters:
+        - in: query
+          name: channel
+          schema:
+            type: string
+          required: true
+          description: ID of channel
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                      enum: ["Message","AESKeyExchange"]
+                      example: "Message"
+                    content:
+                      type: string
+                      example: "Encrypted object"
 components:
   schemas:
     challenge:
@@ -171,15 +207,3 @@ components:
         success:
           type: boolean
           example: false
-    channel:
-      type: object
-      properties:
-        id:
-          type: string
-          example: "1234"
-        name:
-          type: string
-          example: "Friend"
-        picture:
-          type: string
-          example: "https://.../image.png"
