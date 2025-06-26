@@ -30,18 +30,14 @@ paths:
     post:
       tags:
         - Unauthenticated
-      summary: Login
+      summary: Log in
       responses:
         '200':
           description: All valid
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  challenge:
-                    type: string
-                    example: Encrypted value
+                $ref: "#/components/schemas/challenge"
         '400':
           description: Public doesn't match
           content:
@@ -68,6 +64,44 @@ paths:
                 username:
                   type: string
                 passkey:
+                  type: string
+                publickey:
+                  type: string
+  /singup:
+    post:
+      tags:
+        - Unauthenticated
+      summary: Sing up
+      responses:
+        '200':
+          description: All valid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/challenge"
+        '400':
+          description: Username in use
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalid"
+        '401':
+          description: Invalid public key
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalid"
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - username
+                - publickey
+              properties:
+                username:
                   type: string
                 publickey:
                   type: string
@@ -119,6 +153,12 @@ paths:
                       $ref: "#/components/schemas/channel"
 components:
   schemas:
+    challenge:
+      type: object
+      properties:
+        challenge:
+          type: string
+          example: Encrypted value
     valid:
       type: object
       properties:
