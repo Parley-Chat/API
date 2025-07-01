@@ -37,7 +37,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/challenge"
+                oneOf:
+                  - $ref: "#/components/schemas/challenge"
+                  - $ref: '#/components/schemas/loginresponse'
         '400':
           description: Public doesn't match
           content:
@@ -78,7 +80,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/challenge"
+                oneOf:
+                  - $ref: "#/components/schemas/challenge"
+                  - $ref: '#/components/schemas/signupresponse'
         '400':
           description: Username in use
           content:
@@ -207,3 +211,19 @@ components:
         success:
           type: boolean
           example: false
+  
+    loginresponse:
+      type: object
+      properties:
+        session:
+          type: string
+          example: Token
+    signupresponse:
+      type: object
+      properties:
+        session:
+          type: string
+          example: Token
+        passkey:
+          type: string
+          example: Passkey
