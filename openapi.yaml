@@ -37,9 +37,7 @@ paths:
           content:
             application/json:
               schema:
-                oneOf:
-                  - $ref: "#/components/schemas/challenge"
-                  - $ref: '#/components/schemas/loginresponse'
+                $ref: "#/components/schemas/challenge"
         '400':
           description: Public doesn't match
           content:
@@ -80,9 +78,7 @@ paths:
           content:
             application/json:
               schema:
-                oneOf:
-                  - $ref: "#/components/schemas/challenge"
-                  - $ref: '#/components/schemas/signupresponse'
+                $ref: "#/components/schemas/challenge"
         '400':
           description: Username in use
           content:
@@ -131,7 +127,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/valid"
+                oneOf:
+                  - $ref: "#/components/schemas/valid"
+                  - $ref: '#/components/schemas/loginresponse'
+                  - $ref: '#/components/schemas/signupresponse'
         '401':
           description: Invalid
           content:
