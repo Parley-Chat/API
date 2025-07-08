@@ -137,6 +137,28 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/invalid"
+  /me:
+    get:
+      tags:
+        - Authenticated
+      summary: Get current user
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  username:
+                    type: string
+                    example: "Men"
+                  display:
+                    type: string
+                    example: "s'embrassant"
+                  picture:
+                    type: string
+                    example: "https://.../image.png"
   /channels:
     get:
       tags:
@@ -190,6 +212,35 @@ paths:
                     content:
                       type: string
                       example: "Encrypted object"
+  /reset-keys:
+    post:
+      tags:
+        - Authenticated
+      summary: Reset public and private keys
+      responses:
+        '200':
+          description: Valid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/challenge"
+        '400':
+          description: Invalid public key
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalid"
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - publickey
+              properties:
+                publickey:
+                  type: string
 components:
   schemas:
     challenge:
@@ -210,7 +261,7 @@ components:
         success:
           type: boolean
           example: false
-  
+
     loginresponse:
       type: object
       properties:
