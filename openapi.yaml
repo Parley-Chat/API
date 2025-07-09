@@ -117,8 +117,11 @@ paths:
             schema:
               type: object
               required:
+                - id
                 - solve
               properties:
+                id:
+                  type: string
                 solve:
                   type: string
       responses:
@@ -246,6 +249,9 @@ components:
     challenge:
       type: object
       properties:
+        id:
+          type: string
+          example: Identifier
         challenge:
           type: string
           example: Encrypted value
