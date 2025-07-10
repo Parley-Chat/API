@@ -134,6 +134,12 @@ paths:
                   - $ref: "#/components/schemas/valid"
                   - $ref: '#/components/schemas/loginresponse'
                   - $ref: '#/components/schemas/signupresponse'
+        '400':
+          description: Unknown challenge id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalid"
         '401':
           description: Invalid
           content:
