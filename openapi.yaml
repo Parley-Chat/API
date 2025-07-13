@@ -59,13 +59,13 @@ paths:
               required:
                 - username
                 - passkey
-                - publickey
+                - public
               properties:
                 username:
                   type: string
                 passkey:
                   type: string
-                publickey:
+                public:
                   type: string
   /signup:
     post:
@@ -99,11 +99,11 @@ paths:
               type: object
               required:
                 - username
-                - publickey
+                - public
               properties:
                 username:
                   type: string
-                publickey:
+                public:
                   type: string
   /solve:
     post:
@@ -246,9 +246,9 @@ paths:
             schema:
               type: object
               required:
-                - publickey
+                - public
               properties:
-                publickey:
+                public:
                   type: string
 components:
   schemas:
