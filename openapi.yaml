@@ -105,6 +105,31 @@ paths:
                   type: string
                 public:
                   type: string
+  /username_check:
+    get:
+      tags:
+        - Unauthenticated
+      summary: Check username
+      parameters:
+        - in: query
+          name: username
+          schema:
+            type: string
+          required: true
+          description: Username
+      responses:
+        '200':
+          description: Available
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/valid"
+        '400':
+          description: Username in use
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalid"
   /solve:
     post:
       tags:
