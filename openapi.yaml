@@ -190,7 +190,7 @@ paths:
                   display:
                     type: string
                     example: "s'embrassant"
-                  picture:
+                  pfp:
                     type: string
                     example: "https://.../image.png"
         '401':
