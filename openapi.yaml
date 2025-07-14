@@ -193,6 +193,12 @@ paths:
                   picture:
                     type: string
                     example: "https://.../image.png"
+        '401':
+          description: Missing authorization
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalid"
   /channels:
     get:
       tags:
@@ -217,6 +223,12 @@ paths:
                     picture:
                       type: string
                       example: "https://.../image.png"
+        '401':
+          description: Missing authorization
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalid"
   /messages:
     get:
       tags:
@@ -246,6 +258,12 @@ paths:
                     content:
                       type: string
                       example: "Encrypted object"
+        '401':
+          description: Missing authorization
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalid"
   /reset-keys:
     post:
       tags:
@@ -260,6 +278,12 @@ paths:
                 $ref: "#/components/schemas/challenge"
         '400':
           description: Invalid public key
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalid"
+        '401':
+          description: Missing authorization
           content:
             application/json:
               schema:
