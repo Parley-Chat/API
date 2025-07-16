@@ -258,6 +258,9 @@ paths:
                     content:
                       type: string
                       example: "Encrypted object"
+                    timestamp:
+                      type: string
+                      example: "Unix ms"
         '401':
           description: Missing authorization
           content:
